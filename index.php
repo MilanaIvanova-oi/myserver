@@ -346,40 +346,81 @@ try {
 
 
 
-if($_GET !== null){
-
-      try {
+if (isset($_GET['fam']) && isset($_GET['name']) && isset($_GET['ote']) && isset($_GET['pochta']) && isset($_GET['phone']) && isset($_GET['login']) && isset($_GET['pass'])) {
+    try {
         $host = '127.0.0.1';
         $db = 'test_db';
         $user = 'root';
-        $pass = '';
+        $pass_db = '';
         $charset = 'utf8';
 
-         $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+        $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
         $opt = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             PDO::ATTR_EMULATE_PREPARES => false,
         ];
-        // Получение объекта PDO
-        $pdo = new PDO($dsn, $user, $pass, $opt);
+        
+        $pdo = new PDO($dsn, $user, $pass_db, $opt);
 
-        // Получение данных из таблицы student по полю name
-        $stmt = $pdo->query('SELECT first_name FROM students');
+        $fam = htmlspecialchars($_GET['fam']);
+        $name = htmlspecialchars($_GET['name']);
+        $ote = htmlspecialchars($_GET['ote']);
+        $pochta = htmlspecialchars($_GET['pochta']);
+        $phone = htmlspecialchars($_GET['phone']);
+        $login = htmlspecialchars($_GET['login']);
+        $pass = htmlspecialchars($_GET['pass']);
 
+        $stmt = $pdo->prepare("INSERT INTO regbasa (fam, name, ote, pochta, phone, login, pass) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bindParam(1, $fam);
+        $stmt->bindParam(2, $name);
+        $stmt->bindParam(3, $ote);
+        $stmt->bindParam(4, $pochta);
+        $stmt->bindParam(5, $phone);
+        $stmt->bindParam(6, $login);
+        $stmt->bindParam(7, $pass);
+        $stmt->execute();
+        
+        echo "Регистрация успешна!";
+        
     } catch (PDOException $e) {
-        die('Подключение не удалось: ' . $e->getMessage());
+        die('Ошибка подключения: ' . $e->getMessage());
     }
-
-    $results = $stmt->fetchAll();
-    $result = json_encode($results);
-
-
-
-    echo $result;
-}else{
-    return false;
 }
+
+
+//       try {
+//         $host = '127.0.0.1';
+//         $db = 'test_db';
+//         $user = 'root';
+//         $pass = '';
+//         $charset = 'utf8';
+
+//          $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+//         $opt = [
+//             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+//             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+//             PDO::ATTR_EMULATE_PREPARES => false,
+//         ];
+//         // Получение объекта PDO
+//         $pdo = new PDO($dsn, $user, $pass, $opt);
+
+//         // Получение данных из таблицы student по полю name
+//         $stmt = $pdo->query('SELECT first_name FROM students');
+
+//     } catch (PDOException $e) {
+//         die('Подключение не удалось: ' . $e->getMessage());
+//     }
+
+//     $results = $stmt->fetchAll();
+//     $result = json_encode($results);
+
+
+
+//     echo $result;
+// }else{
+//     return false;
+// }
 
 
 
