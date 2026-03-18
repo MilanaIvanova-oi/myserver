@@ -351,9 +351,11 @@ if($_GET !== null && ($_GET['param1'] === $_GET['param2'])){
     $txt1 = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident facilis reprehenderit expedita tenetur eligendi perferendis deleniti fugit laborum nisi iusto vitae cum neque cupiditate corrupti, vero obcaecati sunt voluptatem recusandae nobis, consequatur architecto libero eum. Libero rerum distinctio autem amet?';
     $txt2 = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident facilis reprehenderit expedita tenetur eligendi perferendis deleniti fugit laborum nisi iusto vitae cum neque cupiditate corrupti, vero obcaecati sunt voluptatem recusandae nobis, consequatur architecto libero eum. Libero rerum distinctio autem amet?';
     $txt3 = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident facilis reprehenderit expedita tenetur eligendi perferendis deleniti fugit laborum nisi iusto vitae cum neque cupiditate corrupti, vero obcaecati sunt voluptatem recusandae nobis, consequatur architecto libero eum. Libero rerum distinctio autem amet?';
+    $txt4 = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident facilis reprehenderit expedita tenetur eligendi perferendis deleniti fugit laborum nisi iusto vitae cum neque cupiditate corrupti, vero obcaecat?';
 
 
-    $arr = array('txt1' => $txt1, 'txt2' => $txt2, 'txt3' => $txt3);
+
+    $arr = array('txt1' => $txt1, 'txt2' => $txt2, 'txt3' => $txt3, 'txt4' => $txt4);
     $result = json_encode($arr);
     echo $result;
 }else{
