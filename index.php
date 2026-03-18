@@ -346,17 +346,36 @@ try {
 
 
 
-if($_GET !== null && ($_GET['param1'] === $_GET['param2'])){
+if($_GET !== null){
 
-    $txt1 = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident facilis reprehenderit expedita tenetur eligendi perferendis deleniti fugit laborum nisi iusto vitae cum neque cupiditate corrupti, vero obcaecati sunt voluptatem recusandae nobis, consequatur architecto libero eum. Libero rerum distinctio autem amet?';
-    $txt2 = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident facilis reprehenderit expedita tenetur eligendi perferendis deleniti fugit laborum nisi iusto vitae cum neque cupiditate corrupti, vero obcaecati sunt voluptatem recusandae nobis, consequatur architecto libero eum. Libero rerum distinctio autem amet?';
-    $txt3 = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident facilis reprehenderit expedita tenetur eligendi perferendis deleniti fugit laborum nisi iusto vitae cum neque cupiditate corrupti, vero obcaecati sunt voluptatem recusandae nobis, consequatur architecto libero eum. Libero rerum distinctio autem amet?';
-    $txt4 = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident facilis reprehenderit expedita tenetur eligendi perferendis deleniti fugit laborum nisi iusto vitae cum neque cupiditate corrupti, vero obcaecat?';
+      try {
+        $host = '127.0.0.1';
+        $db = 'test_db';
+        $user = 'root';
+        $pass = '';
+        $charset = 'utf8';
+
+         $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+        $opt = [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES => false,
+        ];
+        // Получение объекта PDO
+        $pdo = new PDO($dsn, $user, $pass, $opt);
+
+        // Получение данных из таблицы student по полю name
+        $stmt = $pdo->query('SELECT first_name FROM students');
+
+    } catch (PDOException $e) {
+        die('Подключение не удалось: ' . $e->getMessage());
+    }
+
+    $results = $stmt->fetchAll();
+    $result = json_encode($results);
 
 
 
-    $arr = array('txt1' => $txt1, 'txt2' => $txt2, 'txt3' => $txt3, 'txt4' => $txt4);
-    $result = json_encode($arr);
     echo $result;
 }else{
     return false;
